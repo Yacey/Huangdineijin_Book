@@ -3,7 +3,6 @@
 #@Author: 栋人佳Dougle（小红书同名）
 #@Date: 2024-01-17
 
-
 import requests as re
 import pandas as pd
 import csv
@@ -23,6 +22,25 @@ def get_page_url(html):
     # print(page_url)
     # return page_url
     return url_M
+
+
+def getBookUrl(url):
+
+    for i in url:
+        print(i)
+        url_Main = i
+        headers = {
+            "Upgrade-Insecure-Requests": "1",
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+            "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
+        }
+
+        res = re.get(url_Main, headers=headers)
+        res.encoding = 'gbk'
+        html = res.text
+        tree = etree.HTML(html)
+        title = tree.xpath('//div[@class="title"]/h2/text()')
+        print(title)
 
 
 
@@ -100,3 +118,4 @@ if __name__ == '__main__':
     # url_M = tree.xpath('//div[@class="content"]//td/a/@href')
     url_M = get_page_url(html)
     print(url_M)  # 测试是否获取到了子页面的url
+    getBookUrl(url_M)
